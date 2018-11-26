@@ -1,0 +1,175 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "f08a791c6f55048ae9d334d28b712c70",
+    "entities": [
+      {
+        "tableName": "Scratcher",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`unit_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `play_id` INTEGER NOT NULL, `button_clicked` INTEGER NOT NULL, `button_id` INTEGER NOT NULL, `timestamp` INTEGER, `value` INTEGER NOT NULL, FOREIGN KEY(`play_id`) REFERENCES `play`(`play_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "unitId",
+            "columnName": "unit_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playId",
+            "columnName": "play_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "buttonClicked",
+            "columnName": "button_clicked",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "button_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "unit_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Scratcher_play_id",
+            "unique": false,
+            "columnNames": [
+              "play_id"
+            ],
+            "createSql": "CREATE  INDEX `index_Scratcher_play_id` ON `${TABLE_NAME}` (`play_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "play",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "play_id"
+            ],
+            "referencedColumns": [
+              "play_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "play",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`play_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `outcome` INTEGER NOT NULL, `won` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `User`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "playId",
+            "columnName": "play_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "outcome",
+            "columnName": "outcome",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "won",
+            "columnName": "won",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "play_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_play_play_id",
+            "unique": true,
+            "columnNames": [
+              "play_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_play_play_id` ON `${TABLE_NAME}` (`play_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "User",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "user_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `wins` INTEGER NOT NULL, `coins` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "UserId",
+            "columnName": "user_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wins",
+            "columnName": "wins",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "coins",
+            "columnName": "coins",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "user_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f08a791c6f55048ae9d334d28b712c70\")"
+    ]
+  }
+}
